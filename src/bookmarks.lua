@@ -17,10 +17,14 @@ local function open_doc(filename, line, col)
   end
 end
 
-local function warn_empty_name(text, warning_text)
+local function warn_empty_name(text, warning_text, as_error)
   if not text or text == "" then
     if warning_text then
-      core.warn(warning_text)
+      if as_error then
+        core.error(warning_text)
+      else
+        core.warn(warning_text)
+      end
     end
     return true
   end
@@ -123,6 +127,10 @@ end
 
 local function open_bookmark(name)
   local bookmark = get_bookmark(name)
+  if bookmark == nil then
+    core.error("No bookmark named '" .. name .. "'")
+    return
+  end
   open_doc(bookmark.filename, bookmark.line, bookmark.col)
 end
 
@@ -185,7 +193,7 @@ command.add("core.docview", {
   ["bookmarks:add-bookmark"] = function(doc_view)
     core.command_view:enter("Add bookmark", {
       submit = function(name)
-        if warn_empty_name(name, "No bookmark selected") then return end
+        if warn_empty_name(name, "Bookmark must have a name", true) then return end
         add_bookmark(name, doc_view)
       end,
       suggest = function(text) return suggest_bookmarks(text) end
