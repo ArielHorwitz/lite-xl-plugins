@@ -175,6 +175,10 @@ command.add(nil, {
       suggest = function(text) return suggest_bookmarks(text) end
     })
   end,
+  ["bookmarks:clear-workspace-bookmarks"] = function()
+    saved_bookmarks = {}
+    save_bookmarks()
+  end,
 })
 
 command.add("core.docview", {

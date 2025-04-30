@@ -14,3 +14,5 @@ A lite-xl plugin for bookmarks.
 - `bookmark:open-bookmark`
 - `bookmark:delete-bookmark`
 - `bookmark:rename-bookmark`
+- `bookmark:rename-bookmark`
+- `bookmarks:clear-workspace-bookmarks`
