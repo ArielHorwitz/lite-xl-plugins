@@ -38,11 +38,7 @@ local function get_bookmark_names()
 end
 
 local function get_bookmark(name)
-  local bookmark = saved_bookmarks[name]
-  if bookmark ~= nil then
-    return bookmark
-  end
-  return get_bookmark_names()[0]
+  return saved_bookmarks[name]
 end
 
 local function suggest_bookmarks(name)
