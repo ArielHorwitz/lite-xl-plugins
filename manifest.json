@@ -2,7 +2,7 @@
   "addons": [
     {
       "id": "bookmarks",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "description": "Named bookmarks",
       "path": "src/bookmarks.lua",
       "mod_version": "3",
