@@ -112,12 +112,6 @@ end
 load_bookmarks()
 
 command.add(nil, {
-  ["bookmarks:debug"] = function()
-    print()
-    open_doc(get_storage_path(), 1, 1)
-  end,
-  ["bookmarks:load-bookmarks"] = load_bookmarks,
-  ["bookmarks:save-bookmarks"] = save_bookmarks,
   ["bookmarks:open-bookmark"] = function()
     core.command_view:enter("Open bookmark", {
       submit = function(name) open_bookmark(name) end,
