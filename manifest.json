@@ -4,7 +4,7 @@
       "id": "bookmarks",
       "version": "0.2.0",
       "description": "Named bookmarks",
-      "path": "src/bookmarks.lua",
+      "path": "src/bookmarks/bookmarks.lua",
       "mod_version": "3",
       "type": "plugin"
     }

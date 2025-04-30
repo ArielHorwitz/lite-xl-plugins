@@ -1,18 +1,20 @@
-# Bookmarks-xl
+# Lite XL plugins
 
-A [lite-xl](https://github.com/lite-xl/lite-xl) plugin for managing named bookmarks.
+My own little plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl). Essentially another repo like the [official plugins](https://github.com/lite-xl/lite-xl-plugins) (see that repo for more detailed information).
 
-### Features
-- [x] add, open, delete, and rename bookmarks
-- [x] separate bookmarks for each workspace
-- [x] persistently saved to disk
-- [x] clean up bookmarks from deleted files
-- [ ] show bookmarks inline document
-- [ ] show more details when opening bookmarks (filename and location, not just bookmark name)
+### Install with plugin manager
+If you have a Lite XL plugin manager, such as [`lpm`](https://github.com/adamharrison/lite-xl-plugin-manager),
+add this repo by running:
+```
+lpm repo add https://github.com/ArielHorwitz/lite-xl-plugins:master
+```
+Then, install the plugins normally by running:
+```
+lpm install plugin_name
+```
 
-### Provided functions
-- `bookmark:add-bookmark`
-- `bookmark:open-bookmark`
-- `bookmark:delete-bookmark`
-- `bookmark:rename-bookmark`
-- `bookmarks:clear-workspace-bookmarks`
+### Install manually
+To install a plugin manually, drop the plugin file directly in:
+* Linux `~/.config/lite-xl/plugins/`
+* MacOS `~/.config/lite-xl/plugins/`
+* Windows `C:\Users\(username)\.config\lite-xl\plugins\`
