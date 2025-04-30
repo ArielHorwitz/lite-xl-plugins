@@ -108,11 +108,20 @@ local function open_bookmark(name)
   open_doc(bookmark.filename, bookmark.line, bookmark.col)
 end
 
+local function clean_deleted_bookmarks()
+  for name, bookmark in pairs(saved_bookmarks) do
+    if not system.get_file_info(bookmark.filename) then
+      saved_bookmarks[name] = nil
+    end
+  end
+end
+
 -- Initialize plugin
 load_bookmarks()
 
 command.add(nil, {
   ["bookmarks:open-bookmark"] = function()
+    clean_deleted_bookmarks()
     core.command_view:enter("Open bookmark", {
       submit = function(name) open_bookmark(name) end,
       suggest = function(text) return suggest_bookmarks(text) end
