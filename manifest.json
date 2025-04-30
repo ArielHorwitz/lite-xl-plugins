@@ -1,0 +1,12 @@
+{
+  "addons": [
+    {
+      "id": "bookmarks",
+      "version": "0.1.0",
+      "description": "Named bookmarks",
+      "path": "src/bookmarks.lua",
+      "mod_version": "3",
+      "type": "plugin"
+    }
+  ]
+}
