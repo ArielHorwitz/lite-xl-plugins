@@ -4,6 +4,7 @@ local system = require "system"
 local core = require "core"
 local common = require "core.common"
 local command = require "core.command"
+local STORAGE_VERSION = 1
 
 local function open_doc(filename, line, col)
   local path = common.home_expand(filename)
@@ -57,7 +58,11 @@ local function get_storage_path()
 end
 
 local function save_bookmarks()
-  local serialized = common.serialize(saved_bookmarks, {pretty = true})
+  local data = {
+    bookmarks = cached_bookmarks,
+    version = STORAGE_VERSION
+  }
+  local serialized = common.serialize(data, {pretty = true})
   local storage_file = get_storage_path()
   print("Saving to:" .. storage_file)
   print(serialized)
@@ -80,7 +85,14 @@ local function load_bookmarks()
   end
   local load_f = loadfile(storage_file)
   if load_f then
-    saved_bookmarks = load_f()
+    local data = load_f()
+    if data.version == nil or data.version ~= STORAGE_VERSION then
+      local loaded_version = data.version or "nil"
+      core.warn("Delete or fix your saved bookmarks file at: " .. storage_file)
+      core.error("Saved bookmarks version mismatch (expected: '" .. STORAGE_VERSION .. "', loaded: '" .. loaded_version .. "')")
+      return
+    end
+    saved_bookmarks = data.bookmarks
   else
     print("Failed to load file: " .. storage_file)
   end
