@@ -140,6 +140,10 @@ load_bookmarks()
 command.add(nil, {
   ["bookmarks:open-bookmark"] = function()
     clean_deleted_bookmarks()
+    if next(saved_bookmarks) == nil then
+      core.warn("No bookmarks")
+      return
+    end
     core.command_view:enter("Open bookmark", {
       submit = function(name)
         if warn_empty_name(name, "No bookmark selected") then return end
