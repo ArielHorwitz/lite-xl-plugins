@@ -16,6 +16,16 @@ local function open_doc(filename, line, col)
   end
 end
 
+local function warn_empty_name(text, warning_text)
+  if not text or text == "" then
+    if warning_text then
+      core.warn(warning_text)
+    end
+    return true
+  end
+  return false
+end
+
 -- Bookmarks
 local saved_bookmarks = {}
 
@@ -123,21 +133,31 @@ command.add(nil, {
   ["bookmarks:open-bookmark"] = function()
     clean_deleted_bookmarks()
     core.command_view:enter("Open bookmark", {
-      submit = function(name) open_bookmark(name) end,
+      submit = function(name)
+        if warn_empty_name(name, "No bookmark selected") then return end
+        open_bookmark(name)
+      end,
       suggest = function(text) return suggest_bookmarks(text) end
     })
   end,
   ["bookmarks:delete-bookmark"] = function()
     core.command_view:enter("Delete bookmark", {
-      submit = function(name) delete_bookmark(name) end,
+      submit = function(name)
+        if warn_empty_name(name, "No bookmark selected") then return end
+        delete_bookmark(name)
+      end,
       suggest = function(text) return suggest_bookmarks(text) end
     })
   end,
   ["bookmarks:rename-bookmark"] = function()
     core.command_view:enter("Rename bookmark", {
       submit = function(old_name)
+        if warn_empty_name(old_name, "No bookmark selected") then return end
         core.command_view:enter("New name", {
-          submit = function(new_name) rename_bookmark(old_name, new_name) end,
+          submit = function(new_name)
+            if warn_empty_name(new_name, "No name given") then return end
+            rename_bookmark(old_name, new_name)
+          end,
         })
       end,
       suggest = function(text) return suggest_bookmarks(text) end
@@ -145,10 +165,13 @@ command.add(nil, {
   end,
 })
 
-command.add("core.docview!", {
+command.add("core.docview", {
   ["bookmarks:add-bookmark"] = function(doc_view)
     core.command_view:enter("Add bookmark", {
-      submit = function(name) add_bookmark(name, doc_view) end,
+      submit = function(name)
+        if warn_empty_name(name, "No bookmark selected") then return end
+        add_bookmark(name, doc_view)
+      end,
       suggest = function(text) return suggest_bookmarks(text) end
     })
   end,
