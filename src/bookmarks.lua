@@ -28,18 +28,18 @@ local function warn_empty_name(text, warning_text)
 end
 
 -- Bookmarks
-local saved_bookmarks = {}
+local cached_bookmarks = {}
 
 local function get_bookmark_names()
   local results = {}
-  for key in pairs(saved_bookmarks) do
+  for key in pairs(cached_bookmarks) do
     table.insert(results, key)
   end
   return results
 end
 
 local function get_bookmark(name)
-  return saved_bookmarks[name]
+  return cached_bookmarks[name]
 end
 
 local function suggest_bookmarks(name)
@@ -80,7 +80,7 @@ local function load_bookmarks()
   local storage_file = get_storage_path()
   local storage_file_info = system.get_file_info(storage_file)
   if storage_file_info == nil or storage_file_info.size == 0 then
-    saved_bookmarks = {}
+    cached_bookmarks = {}
     save_bookmarks()
   end
   local load_f = loadfile(storage_file)
@@ -92,7 +92,7 @@ local function load_bookmarks()
       core.error("Saved bookmarks version mismatch (expected: '" .. STORAGE_VERSION .. "', loaded: '" .. loaded_version .. "')")
       return
     end
-    saved_bookmarks = data.bookmarks
+    cached_bookmarks = data.bookmarks
   else
     print("Failed to load file: " .. storage_file)
   end
@@ -101,7 +101,7 @@ end
 -- Management
 local function add_bookmark(name, doc_view)
   local line, col = doc_view.doc:get_selection()
-  saved_bookmarks[name] = {
+  cached_bookmarks[name] = {
     filename = doc_view.doc.filename,
     line = line,
     col = col
@@ -111,13 +111,13 @@ end
 
 local function rename_bookmark(old_name, new_name)
   local bookmark = get_bookmark(old_name)
-  saved_bookmarks[old_name] = nil
-  saved_bookmarks[new_name] = bookmark
+  cached_bookmarks[old_name] = nil
+  cached_bookmarks[new_name] = bookmark
   save_bookmarks()
 end
 
 local function delete_bookmark(name)
-  saved_bookmarks[name] = nil
+  cached_bookmarks[name] = nil
   save_bookmarks()
 end
 
@@ -127,9 +127,9 @@ local function open_bookmark(name)
 end
 
 local function clean_deleted_bookmarks()
-  for name, bookmark in pairs(saved_bookmarks) do
+  for name, bookmark in pairs(cached_bookmarks) do
     if not system.get_file_info(bookmark.filename) then
-      saved_bookmarks[name] = nil
+      cached_bookmarks[name] = nil
     end
   end
 end
@@ -140,7 +140,7 @@ load_bookmarks()
 command.add(nil, {
   ["bookmarks:open-bookmark"] = function()
     clean_deleted_bookmarks()
-    if next(saved_bookmarks) == nil then
+    if next(cached_bookmarks) == nil then
       core.warn("No bookmarks")
       return
     end
@@ -176,7 +176,7 @@ command.add(nil, {
     })
   end,
   ["bookmarks:clear-workspace-bookmarks"] = function()
-    saved_bookmarks = {}
+    cached_bookmarks = {}
     save_bookmarks()
   end,
 })
