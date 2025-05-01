@@ -2,6 +2,9 @@
 
 My own little plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl). Essentially another repo like the [official plugins](https://github.com/lite-xl/lite-xl-plugins) (see that repo for more detailed information).
 
+## Plugins
+* [Bookmarks](src/bookmarks)
+
 ### Install with plugin manager
 If you have a Lite XL plugin manager, such as [`lpm`](https://github.com/adamharrison/lite-xl-plugin-manager),
 add this repo by running:

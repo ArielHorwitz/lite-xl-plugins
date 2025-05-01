@@ -1,6 +1,5 @@
-# Bookmarks-xl
-
-A [lite-xl](https://github.com/lite-xl/lite-xl) plugin for managing named bookmarks.
+# Bookmarks
+Manage named bookmarks.
 
 ### Features
 - [x] add, open, delete, and rename bookmarks
