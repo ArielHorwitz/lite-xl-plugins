@@ -79,9 +79,8 @@ local function save_bookmarks()
   if fp then
     fp:write(string.format("return %s\n", serialized))
     fp:close()
-    print("Saved")
   else
-    print("Failed to open file: " .. storage_file)
+    core.error("Failed to save bookmarks to file: " .. storage_file)
   end
 end
 
@@ -103,7 +102,7 @@ local function load_bookmarks()
     end
     cached_bookmarks = data.bookmarks
   else
-    print("Failed to load file: " .. storage_file)
+    core.error("Failed to load bookmarks from file: " .. storage_file)
   end
 end
 
@@ -116,6 +115,7 @@ local function add_bookmark(name, doc_view)
     line = line,
     col = col
   }
+  core.log("Added bookmark: '" .. name .. "'")
   save_bookmarks()
 end
 
@@ -124,6 +124,7 @@ local function rename_bookmark(old_name, new_name)
   local bookmark = get_bookmark(old_name)
   cached_bookmarks[old_name] = nil
   cached_bookmarks[new_name] = bookmark
+  core.log("Renamed bookmark: '" .. old_name .. "'" .. " to: '" .. new_name .. "'")
   save_bookmarks()
 end
 
@@ -134,6 +135,7 @@ local function delete_bookmark(name)
     return
   end
   cached_bookmarks[name] = nil
+  core.log("Deleted bookmark: '" .. name .. "'")
   save_bookmarks()
 end
 
@@ -145,6 +147,7 @@ local function open_bookmark(name)
     return
   end
   open_doc(bookmark.filename, bookmark.line, bookmark.col)
+  core.log("Opened bookmark: '" .. name .. "'")
 end
 
 local function clean_deleted_bookmarks()
