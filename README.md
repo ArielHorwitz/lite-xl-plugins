@@ -4,6 +4,7 @@ My own little plugins for the [Lite XL text editor](https://github.com/lite-xl/l
 
 ## Plugins
 * [Bookmarks](src/bookmarks)
+* [Exfold](src/exfold)
 
 ### Install with plugin manager
 If you have a Lite XL plugin manager, such as [`lpm`](https://github.com/adamharrison/lite-xl-plugin-manager),

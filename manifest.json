@@ -7,6 +7,14 @@
       "path": "src/bookmarks/bookmarks.lua",
       "mod_version": "3",
       "type": "plugin"
+    },
+    {
+      "id": "exfold",
+      "version": "0.1.0",
+      "description": "Expand and fold function signatures",
+      "path": "src/exfold/exfold.lua",
+      "mod_version": "3",
+      "type": "plugin"
     }
   ]
 }
