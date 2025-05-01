@@ -34,21 +34,26 @@ end
 -- Bookmarks
 local cached_bookmarks = {}
 
-local function get_bookmark_names()
-  local results = {}
-  for key in pairs(cached_bookmarks) do
-    table.insert(results, key)
-  end
-  return results
+local function add_bookmark_context(name, bookmark)
+  local b = bookmark
+  local filename = b.filename:gsub("%[", "_")
+	return string.format("%s [ %d:%d @ %s ]", name, b.line, b.col, filename)
+end
+
+local function strip_bookmark_context(name)
+  return name:match("^(.+) %[") or name
 end
 
 local function get_bookmark(name)
   return cached_bookmarks[name]
 end
 
-local function suggest_bookmarks(name)
-  local bookmark_names = get_bookmark_names()
-  return common.fuzzy_match(bookmark_names, name, false)
+local function suggest_bookmarks(text)
+  local suggestions = {}
+  for name, bookmark in pairs(cached_bookmarks) do
+    table.insert(suggestions, add_bookmark_context(name, bookmark))
+  end
+  return common.fuzzy_match(suggestions, text, false)
 end
 
 -- Persistence
@@ -104,6 +109,7 @@ end
 
 -- Management
 local function add_bookmark(name, doc_view)
+  name = strip_bookmark_context(name)
   local line, col = doc_view.doc:get_selection()
   cached_bookmarks[name] = {
     filename = doc_view.doc.filename,
@@ -114,6 +120,7 @@ local function add_bookmark(name, doc_view)
 end
 
 local function rename_bookmark(old_name, new_name)
+  old_name = strip_bookmark_context(old_name)
   local bookmark = get_bookmark(old_name)
   cached_bookmarks[old_name] = nil
   cached_bookmarks[new_name] = bookmark
@@ -121,11 +128,17 @@ local function rename_bookmark(old_name, new_name)
 end
 
 local function delete_bookmark(name)
+  name = strip_bookmark_context(name)
+  if cached_bookmarks[name] ~= nil then
+    core.error("No bookmark named '" .. name .. "'")
+    return
+  end
   cached_bookmarks[name] = nil
   save_bookmarks()
 end
 
 local function open_bookmark(name)
+  name = strip_bookmark_context(name)
   local bookmark = get_bookmark(name)
   if bookmark == nil then
     core.error("No bookmark named '" .. name .. "'")

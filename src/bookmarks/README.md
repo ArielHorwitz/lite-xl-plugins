@@ -7,8 +7,8 @@ A [lite-xl](https://github.com/lite-xl/lite-xl) plugin for managing named bookma
 - [x] separate bookmarks for each workspace
 - [x] persistently saved to disk
 - [x] clean up bookmarks from deleted files
+- [x] show filename and location next to bookmark names
 - [ ] show bookmarks inline document
-- [ ] show more details when opening bookmarks (filename and location, not just bookmark name)
 
 ### Provided functions
 - `bookmark:add-bookmark`
