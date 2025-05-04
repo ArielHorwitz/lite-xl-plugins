@@ -130,7 +130,7 @@ end
 
 local function delete_bookmark(name)
   name = strip_bookmark_context(name)
-  if cached_bookmarks[name] ~= nil then
+  if cached_bookmarks[name] == nil then
     core.error("No bookmark named '" .. name .. "'")
     return
   end
