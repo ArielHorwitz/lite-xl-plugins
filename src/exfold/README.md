@@ -3,17 +3,17 @@ Expand and fold function signatures between parentheses and carets.
 
 Folded:
 ```rust
-my_func(foo: bool, bar: u32, baz: Vec<String>) -> Result<()> {
+pub fn my_func(foo: bool, bar: u32, baz: Vec<String>) -> Result<()> {
     todo!()
 }
 ```
 Expanded:
 ```rust
-my_func(
+pub fn my_func(
     foo: bool,
     bar: u32,
     baz: Vec<String>,
-) -> Result<> {
+) -> Result<()> {
     todo!()
 }
 ```
