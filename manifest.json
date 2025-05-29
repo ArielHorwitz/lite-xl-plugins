@@ -10,7 +10,7 @@
     },
     {
       "id": "exfold",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Expand and fold function signatures",
       "path": "src/exfold/exfold.lua",
       "mod_version": "3",
