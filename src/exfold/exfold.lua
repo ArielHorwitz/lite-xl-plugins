@@ -19,7 +19,7 @@ local function expand_current_line(doc)
   local single_indent = doc:get_indent_string()
   local line = doc.lines[current_line]
   local indent = line:match("^%s*")
-  local name = line:match("(.-%().*")
+  local name = line:match("^%s+(.-%().*")
   local args, rest = line:match("%((.-)%)(.*)$")
   if name == nil or args == nil then
     core.warn("Function signature not found")
