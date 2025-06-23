@@ -15,6 +15,14 @@
       "path": "src/exfold/exfold.lua",
       "mod_version": "3",
       "type": "plugin"
+    },
+    {
+      "id": "finalnewline",
+      "version": "0.1.0",
+      "description": "Explicitly show the final newline",
+      "path": "src/finalnewline/finalnewline.lua",
+      "mod_version": "3",
+      "type": "plugin"
     }
   ]
 }
