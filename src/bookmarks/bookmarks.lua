@@ -73,8 +73,8 @@ local function save_bookmarks()
   }
   local serialized = common.serialize(data, { pretty = true })
   local storage_file = get_storage_path()
-  print("Saving to:" .. storage_file)
-  print(serialized)
+  core.log_quiet("Saving to:" .. storage_file)
+  core.log_quiet(serialized)
   local fp = io.open(storage_file, "w")
   if fp then
     fp:write(string.format("return %s\n", serialized))
